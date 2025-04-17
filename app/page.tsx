@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Lanyard from "./components/Lanyard/Lanyard";
 import RotatingText from "./components/RotatingText/RotatingText";
+import SplitText from "./components/SplitText/SplitText";
 
 export default function Home() {
   return (
@@ -25,7 +26,26 @@ export default function Home() {
               />
             </div>
             <div>
-              
+            <SplitText
+              text="Hello, I'm Muhammad Irsan"
+              className="text-2xl font-semibold text-start"
+              delay={150}
+              animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+              animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+              threshold={0.2}
+              rootMargin="-50px"
+                />
+            </div>
+            <div>
+            <SplitText
+              text="I'm FULL SPECTRUM IT SPECIALIST"
+              className="text-2xl font-semibold text-start text-[#C6F10E]"
+              delay={150}
+              animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+              animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+              threshold={0.2}
+              rootMargin="-50px"
+                />
             </div>
           </div>
           <div className="col-span-6">
