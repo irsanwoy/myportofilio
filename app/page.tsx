@@ -2,11 +2,25 @@ import Image from "next/image";
 import Lanyard from "./components/Lanyard/Lanyard";
 import RotatingText from "./components/RotatingText/RotatingText";
 import SplitText from "./components/SplitText/SplitText";
+import Particles from "./components/Particles/Particles";
 
 export default function Home() {
   return (
+    
     <div className="min-h-screen overflow-x-hidden bg-[#19222D]">
-      <div className="container border mx-auto h-screen">
+      <div className="container border mx-auto h-screen
+        style={{ width: '100%', height: '600px', position: 'relative' }}>
+          <Particles
+            particleColors={['#ffffff', '#ffffff']}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
+          />
+      ">
         <div className="grid grid-cols-12">
           <div className="col-span-6">
             <div className="flex items-center gap-2">
