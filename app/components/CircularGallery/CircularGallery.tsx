@@ -395,11 +395,11 @@ class Media {
         ];
       }
     }
-    this.scale = this.screen.height / 1500;
+    this.scale = this.screen.height / 800;
     this.plane.scale.y =
-      (this.viewport.height * (900 * this.scale)) / this.screen.height;
+      (this.viewport.height * (1800 * this.scale)) / this.screen.height;
     this.plane.scale.x =
-      (this.viewport.width * (700 * this.scale)) / this.screen.width;
+      (this.viewport.width * (1400 * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
@@ -698,6 +698,7 @@ export default function CircularGallery({
   font = "bold 30px DM Sans",
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!containerRef.current) return;
     const app = new App(containerRef.current, {
@@ -707,12 +708,18 @@ export default function CircularGallery({
       borderRadius,
       font,
     });
+
     return () => {
       app.destroy();
     };
   }, [items, bend, textColor, borderRadius, font]);
-  <div
-    className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing"
-    ref={containerRef}
-  />;
+
+  // Ini bagian yang tadinya belum di-return
+  return (
+    <div
+      className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing"
+      ref={containerRef}
+    />
+  );
 }
+
