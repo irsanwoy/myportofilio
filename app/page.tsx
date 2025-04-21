@@ -10,6 +10,7 @@ import Folder from "./components/Folder/Folder";
 import CircularGallery from "./components/CircularGallery/CircularGallery";
 import Mansory from "./components/Masonry/Masonry";
 import SpotlightCard from "./components/SpotlightCard/SpotlightCard";
+import ScrollVelocity from "./components/ScrollVelocity/ScrollVelocity";
 import { useState } from "react";
 
 const skillCategories = [
@@ -82,6 +83,7 @@ const items = [
 ];
 
 function App() {
+  const velocity = 0.5;
   const [activeSection, setActiveSection] = useState("home");
 
   const [name, setName] = useState("");
@@ -95,7 +97,7 @@ function App() {
           <>
             <div className="w-full h-screen flex items-center justify-center relative">
               <div className="w-full px-4">
-                <Lanyard position={[0, 0, 12]} gravity={[0, -40, 0]} />
+                <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
               </div>
             </div>
 
@@ -311,6 +313,11 @@ function App() {
                 </form>
               </SpotlightCard>
             </div>
+            <ScrollVelocity
+              texts={["React Bits", "Scroll Down"]}
+              velocity={velocity}
+              className="custom-scroll-text"
+            />
             <div className="text-center space-y-4">
               <p className="text-lg text-gray-700 dark:text-gray-300">
                 Got a project, opportunity, or just want to say hi? Let’s
@@ -358,18 +365,20 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen ">
-      <Particles
-        className="absolute inset-0 particles-container"
-        particleColors={["#ffffff", "#ffffff"]}
-        particleCount={200}
-        particleSpread={10}
-        speed={0.1}
-        particleBaseSize={100}
-        moveParticlesOnHover={false}
-        alphaParticles={true}
-        disableRotation={true}
-      />
+    <div className="relative min-h-screen">
+      <div className="absolute top-0 right-0 left-0 bottom-0 w-full h-full">
+        <Particles
+          className="absolute inset-0 particles-container"
+          particleColors={["#ffffff", "#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover={false}
+          alphaParticles={true}
+          disableRotation={true}
+        />
+      </div>
 
       {/* Navbar */}
       <div className="fixed top-0 left-0 w-full z-20 flex justify-center px-4 py-2">
