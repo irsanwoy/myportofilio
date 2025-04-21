@@ -30,8 +30,9 @@ const FallingText: React.FC<FallingTextProps> = ({
 
   useEffect(() => {
     if (!textRef.current) return;
-    const words = text.split(" ");
 
+    // Split teks menjadi kata-kata dan tambahkan styling untuk kata-kata yang dihighlight
+    const words = text.split(" ");
     const newHTML = words
       .map((word) => {
         const isHighlighted = highlightWords.some((hw) => word.startsWith(hw));
@@ -49,10 +50,13 @@ const FallingText: React.FC<FallingTextProps> = ({
   }, [text, highlightWords]);
 
   useEffect(() => {
+    // Mulai efek jika trigger adalah "auto"
     if (trigger === "auto") {
       setEffectStarted(true);
       return;
     }
+
+    // Mulai efek saat section masuk ke viewport jika trigger adalah "scroll"
     if (trigger === "scroll" && containerRef.current) {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -76,15 +80,18 @@ const FallingText: React.FC<FallingTextProps> = ({
 
     if (!containerRef.current || !canvasContainerRef.current) return;
 
+    // Dapatkan ukuran kontainer
     const containerRect = containerRef.current.getBoundingClientRect();
     const width = containerRect.width;
     const height = containerRect.height;
 
     if (width <= 0 || height <= 0) return;
 
+    // Inisialisasi engine Matter.js
     const engine = Engine.create();
     engine.world.gravity.y = gravity;
 
+    // Buat renderer untuk Matter.js
     const render = Render.create({
       element: canvasContainerRef.current,
       engine,
@@ -96,39 +103,46 @@ const FallingText: React.FC<FallingTextProps> = ({
       },
     });
 
+    // Boundary options untuk dinding
     const boundaryOptions = {
       isStatic: true,
       render: { fillStyle: "transparent" },
     };
+
+    // Buat boundary (dinding)
     const floor = Bodies.rectangle(
       width / 2,
-      height + 25,
+      height + 50, // Tambahkan ruang ekstra di bawah
       width,
-      50,
-      boundaryOptions
-    );
-    const leftWall = Bodies.rectangle(
-      -25,
-      height / 2,
-      50,
-      height,
-      boundaryOptions
-    );
-    const rightWall = Bodies.rectangle(
-      width + 25,
-      height / 2,
-      50,
-      height,
-      boundaryOptions
-    );
-    const ceiling = Bodies.rectangle(
-      width / 2,
-      -25,
-      width,
-      50,
+      100, // Tinggi dinding lebih besar
       boundaryOptions
     );
 
+    const leftWall = Bodies.rectangle(
+      -50, // Geser dinding ke kiri
+      height / 2,
+      100, // Lebih tebal
+      height,
+      boundaryOptions
+    );
+
+    const rightWall = Bodies.rectangle(
+      width + 50, // Geser dinding ke kanan
+      height / 2,
+      100, // Lebih tebal
+      height,
+      boundaryOptions
+    );
+
+    const ceiling = Bodies.rectangle(
+      width / 2,
+      -50, // Geser dinding ke atas
+      width,
+      100, // Tinggi dinding lebih besar
+      boundaryOptions
+    );
+
+    // Ambil elemen teks dan buat body fisik untuk setiap kata
     if (!textRef.current) return;
     const wordSpans = textRef.current.querySelectorAll("span");
     const wordBodies = [...wordSpans].map((elem) => {
@@ -143,6 +157,8 @@ const FallingText: React.FC<FallingTextProps> = ({
         frictionAir: 0.01,
         friction: 0.2,
       });
+
+      // Atur kecepatan awal dan rotasi
       Matter.Body.setVelocity(body, {
         x: (Math.random() - 0.5) * 5,
         y: 0,
@@ -152,6 +168,7 @@ const FallingText: React.FC<FallingTextProps> = ({
       return { elem, body };
     });
 
+    // Pasang elemen teks ke body fisik
     wordBodies.forEach(({ elem, body }) => {
       elem.style.position = "absolute";
       elem.style.left = `${
@@ -163,7 +180,8 @@ const FallingText: React.FC<FallingTextProps> = ({
       elem.style.transform = "none";
     });
 
-    const mouse = Mouse.create(containerRef.current);
+    // Tambahkan interaksi mouse
+    const mouse = Mouse.create(canvasContainerRef.current);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
       constraint: {
@@ -173,6 +191,7 @@ const FallingText: React.FC<FallingTextProps> = ({
     });
     render.mouse = mouse;
 
+    // Tambahkan semua elemen ke dunia Matter.js
     World.add(engine.world, [
       floor,
       leftWall,
@@ -182,10 +201,12 @@ const FallingText: React.FC<FallingTextProps> = ({
       ...wordBodies.map((wb) => wb.body),
     ]);
 
+    // Jalankan engine dan renderer
     const runner = Runner.create();
     Runner.run(runner, engine);
     Render.run(render);
 
+    // Update posisi teks secara real-time
     const updateLoop = () => {
       wordBodies.forEach(({ body, elem }) => {
         const { x, y } = body.position;
@@ -198,6 +219,7 @@ const FallingText: React.FC<FallingTextProps> = ({
     };
     updateLoop();
 
+    // Bersihkan resources saat komponen unmount
     return () => {
       Render.stop(render);
       Runner.stop(runner);
@@ -224,7 +246,7 @@ const FallingText: React.FC<FallingTextProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative z-[1] w-full h-full cursor-pointer text-center pt-8 overflow-hidden"
+      className="relative z-[1] w-full h-full cursor-pointer text-center overflow-visible"
       onClick={trigger === "click" ? handleTrigger : undefined}
       onMouseOver={trigger === "hover" ? handleTrigger : undefined}
     >
@@ -236,7 +258,6 @@ const FallingText: React.FC<FallingTextProps> = ({
           lineHeight: 1.4,
         }}
       />
-
       <div className="absolute top-0 left-0 z-0" ref={canvasContainerRef} />
     </div>
   );

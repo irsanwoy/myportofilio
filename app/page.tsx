@@ -100,7 +100,7 @@ function App() {
                 <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
               </div>
             </div>
-            <div className="mt-[-250px] z-10">
+            <div className="mt-[-180px] z-10">
             <AnimatedContent
               distance={150}
               direction="horizontal"
@@ -143,29 +143,30 @@ function App() {
         );
       case "about":
         return (
-          <div className="section relative z-50 overflow-visible min-h-screen pb-[500px] border border-red-500">
-            <FallingText
-              text={`I’m an Informatics student with a strong passion for technology and problem-solving. My interests and skills span across multiple IT domains, including web development, artificial-intelligence, networking, and office software proficiency. I enjoy learning new technologies and continuously improving my capabilities to adapt in various environments. With a solid foundation and a flexible mindset, I aim to contribute to innovative projects and grow in the dynamic world of information technology.`}
-              highlightWords={[
-                "Informatics",
-                "problem-solving",
-                "multiple",
-                "including",
-                "artificial-intelligence",
-                "technologies",
-                "networking",
-                "innovative",
-                "world",
-              ]}
-              // highlightClass="highlighted"
-              trigger="hover"
-              backgroundColor="transparent"
-              wireframes={false}
-              gravity={0.56}
-              fontSize="2rem"
-              mouseConstraintStiffness={0.9}
-            />
-          </div>
+          <div className="section relative z-50 overflow-visible min-h-screen pb-[500px] border border-red-500 pt-[120px]">
+      <FallingText
+        text={`I’m an Informatics student with a strong passion for technology and problem-solving. My interests and skills span across multiple IT domains, including web development, artificial-intelligence, networking, and office software proficiency. I enjoy learning new technologies and continuously improving my capabilities to adapt in various environments. With a solid foundation and a flexible mindset, I aim to contribute to innovative projects and grow in the dynamic world of information technology.`}
+        highlightWords={[
+          "Informatics",
+          "problem-solving",
+          "multiple",
+          "including",
+          "artificial-intelligence",
+          "technologies",
+          "networking",
+          "innovative",
+          "world",
+        ]}
+        fontSize="2rem"
+        gravity={0.56}
+        mouseConstraintStiffness={0.9}
+
+        trigger="hover"
+        backgroundColor="transparent"
+        wireframes={false}
+      
+      />
+    </div>
         );
       case "project":
         return (
