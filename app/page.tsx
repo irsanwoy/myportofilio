@@ -95,12 +95,12 @@ function App() {
       case "home":
         return (
           <>
-            <div className="w-full h-screen flex items-center justify-center relative">
+            <div className="w-full min-h-screen flex items-center justify-center relative">
               <div className="w-full px-4">
                 <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
               </div>
             </div>
-
+            <div className="mt-[-250px] z-10">
             <AnimatedContent
               distance={150}
               direction="horizontal"
@@ -114,7 +114,7 @@ function App() {
               <h1 className="text-white text-3xl text-center font-bold mb-4">
                 My Name is Muhammad Irsan
               </h1>
-              <div className="text-center mb-8">
+              <div className="text-center mb-20">
                 <div className="flex justify-center items-center gap-2">
                   <h1 className="text-xl text-white font-bold">I'm a</h1>
                   <RotatingText
@@ -124,7 +124,7 @@ function App() {
                       "Flexible Developer",
                       "IT All-Rounder",
                     ]}
-                    mainClassName="rotating-text"
+                    mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg font-bold"
                     staggerFrom={"last"}
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
@@ -137,6 +137,8 @@ function App() {
                 </div>
               </div>
             </AnimatedContent>
+            </div>
+            
           </>
         );
       case "about":
