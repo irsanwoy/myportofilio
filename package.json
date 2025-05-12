@@ -15,12 +15,14 @@
     "@react-three/rapier": "^1.5.0",
     "framer-motion": "^11.18.2",
     "gsap": "^3.12.7",
+    "lucide-react": "^0.510.0",
     "matter-js": "^0.20.0",
     "meshline": "^3.3.1",
     "next": "14.2.26",
     "ogl": "^1.0.11",
     "react": "^18",
     "react-dom": "^18",
+    "react-intersection-observer": "^9.16.0",
     "three": "^0.167.1"
   },
   "devDependencies": {
